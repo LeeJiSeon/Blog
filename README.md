@@ -1,2 +1,2 @@
 # Blog
-spring을 사용 blog project
+spring을 사용한 blog project
