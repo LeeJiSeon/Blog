@@ -6,6 +6,7 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.blogproject.web.board.dao.BoardDAO;
 import com.blogproject.web.board.model.BoardVO;
@@ -31,6 +32,7 @@ public class BoardServiceImpl implements BoardService {
 		boardDAO.updateBoard(boardVO);
 	}
 	
+	@Transactional
 	@Override
 	public BoardVO getBoardContent(int bid) throws Exception {
 //		boardDAO.updateViewCnt(bid);
