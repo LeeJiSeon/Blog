@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.blogproject.common.Pagination;
 import com.blogproject.web.board.model.BoardVO;
 import com.blogproject.web.board.service.BoardService;
 
@@ -25,8 +26,18 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@RequestMapping(value = "/getBoardList", method = RequestMethod.GET)
-	public String getBoardList(Model model) throws Exception {
-		model.addAttribute("boardList", boardService.getBoardList());
+	public String getBoardList(Model model
+			, @RequestParam(required = false, defaultValue = "1") int page
+			, @RequestParam(required = false, defaultValue = "1") int range
+			) throws Exception {
+		
+		int listCnt = boardService.getBoardListCnt();
+		
+		Pagination pagination = new Pagination();
+		pagination.pageInfo(page, range, listCnt);
+		
+		model.addAttribute("pagination", pagination);
+		model.addAttribute("boardList", boardService.getBoardList(pagination));
 		return "board/index";
 	}
 	

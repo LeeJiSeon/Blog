@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.blogproject.common.Pagination;
 import com.blogproject.web.board.dao.BoardDAO;
 import com.blogproject.web.board.model.BoardVO;
 import com.blogproject.web.error.controller.NotFoundException;
@@ -18,8 +19,8 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO boardDAO;
 	
 	@Override
-	public List<BoardVO> getBoardList() throws Exception {
-		return boardDAO.getBoardList();
+	public List<BoardVO> getBoardList(Pagination pagination) throws Exception {
+		return boardDAO.getBoardList(pagination);
 	}
 	
 	@Override
@@ -35,23 +36,28 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	@Override
 	public BoardVO getBoardContent(int bid) throws Exception {
-//		boardDAO.updateViewCnt(bid);
-//		return boardDAO.getBoardContent(bid);
 		BoardVO boardVO= new BoardVO();
-		boardDAO.updateViewCnt(bid);
 		
-		try {
-			boardVO.setBid(bid);
-			boardVO.setCate_cd("111111111111111111111111111111111");
-			boardDAO.updateBoard(boardVO);
-		} catch(RuntimeException e) {
-			throw new NotFoundException();
-		}
+		boardDAO.updateViewCnt(bid);
+		boardVO = boardDAO.getBoardContent(bid);
+		
+//		try {
+//			boardVO.setBid(bid);
+//			boardVO.setCate_cd("111111111111111111111111111111111");
+//			boardDAO.updateBoard(boardVO);
+//		} catch(RuntimeException e) {
+//			throw new NotFoundException();
+//		}
 		return boardVO;
 	}
 	
 	@Override
 	public void deleteBoard(int bid) throws Exception {
 		boardDAO.deleteBoard(bid);
+	}
+	
+	@Override
+	public int getBoardListCnt() throws Exception {
+		return boardDAO.getBoardListCnt();
 	}
 }
