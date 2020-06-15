@@ -7,7 +7,8 @@ import javax.inject.Inject;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
-import com.blogproject.common.Pagination;
+//import com.blogproject.common.Pagination;
+import com.blogproject.common.Search;
 import com.blogproject.web.board.model.BoardVO;
 
 @Repository
@@ -17,8 +18,8 @@ public class BoardDAOImpl implements BoardDAO {
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<BoardVO> getBoardList(Pagination pagination) throws Exception {
-		return sqlSession.selectList("com.blogproject.web.board.boardMapper.getBoardList", pagination);
+	public List<BoardVO> getBoardList(Search search) throws Exception {
+		return sqlSession.selectList("com.blogproject.web.board.boardMapper.getBoardList", search);
 	}
 	
 	@Override
@@ -27,8 +28,8 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public int getBoardListCnt() throws Exception {
-		return sqlSession.selectOne("com.blogproject.web.board.boardMapper.getBoardListCnt");
+	public int getBoardListCnt(Search search) throws Exception {
+		return sqlSession.selectOne("com.blogproject.web.board.boardMapper.getBoardListCnt", search);
 	}
 	
 	@Override

@@ -8,7 +8,8 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.blogproject.common.Pagination;
+//import com.blogproject.common.Pagination;
+import com.blogproject.common.Search;
 import com.blogproject.web.board.dao.BoardDAO;
 import com.blogproject.web.board.model.BoardVO;
 import com.blogproject.web.error.controller.NotFoundException;
@@ -19,8 +20,8 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDAO boardDAO;
 	
 	@Override
-	public List<BoardVO> getBoardList(Pagination pagination) throws Exception {
-		return boardDAO.getBoardList(pagination);
+	public List<BoardVO> getBoardList(Search search) throws Exception {
+		return boardDAO.getBoardList(search);
 	}
 	
 	@Override
@@ -57,7 +58,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int getBoardListCnt() throws Exception {
-		return boardDAO.getBoardListCnt();
+	public int getBoardListCnt(Search search) throws Exception {
+		return boardDAO.getBoardListCnt(search);
 	}
 }
